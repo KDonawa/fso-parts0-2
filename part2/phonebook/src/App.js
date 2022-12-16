@@ -16,7 +16,7 @@ function App() {
     });
   }, []);
 
-  function displayNotification(notification, timeoutSeconds = 3) {
+  function displayNotification(notification, timeoutSeconds = 5) {
     setNotification(notification);
     setTimeout(() => {
       setNotification(null);

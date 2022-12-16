@@ -23,16 +23,24 @@ function Form({ persons, setPersons, displayNotification }) {
     }
 
     addNewEntry();
-    displayNotification({ message: `Added ${newName}`, type: "success" });
   }
 
   function addNewEntry() {
     const newEntry = { name: newName, number: newNumber, id: uuidv4() };
-    personService.create(newEntry).then((data) => {
-      setPersons(persons.concat(data));
-      setNewName("");
-      setNewNumber("");
-    });
+    personService
+      .create(newEntry)
+      .then((person) => {
+        displayNotification({ message: `Added ${newName}`, type: "success" });
+        setPersons(persons.concat(person));
+        setNewName("");
+        setNewNumber("");
+      })
+      .catch((error) => {
+        displayNotification({
+          message: error.response.data.error,
+          type: "error",
+        });
+      });
   }
 
   function updateEntry(entry) {
